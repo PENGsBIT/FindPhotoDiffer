@@ -14,7 +14,13 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 def matchAB(fileA, fileB):
+    # # 处理一张图的两个画面位于中轴线两侧
+    # img = cv2.imread('img/image02.png')
+    # height, width, _ = img.shape
+    # imageA = img[0:round(height / 2), :]
+    # imageB = img[round(height / 2):, :]
     # 读取图像数据
     imgA = cv2.imread(fileA)
     imgB = cv2.imread(fileB)
@@ -38,7 +44,7 @@ def matchAB(fileA, fileB):
             result_window[start_y:start_y + 100, start_x:start_x + 100] = result
 
     # 用四边形圈出不同部分
-    _, result_window_bin = cv2.threshold(result_window, 30, 255, cv2.THRESH_BINARY)
+    _, result_window_bin = cv2.threshold(result_window, 70, 255, cv2.THRESH_BINARY)
     _, contours, _ = cv2.findContours(result_window_bin, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     imgC = imgA.copy()
     for contour in contours:
@@ -55,3 +61,7 @@ def matchAB(fileA, fileB):
     plt.subplot(1, 3, 3), plt.imshow(cv2.cvtColor(imgC, cv2.COLOR_BGR2RGB)), plt.title('Answer'), plt.xticks(
         []), plt.yticks([])
     plt.show()
+
+
+if __name__ == '__main__':
+   matchAB('image01.jpg', 'image02.jpg')
