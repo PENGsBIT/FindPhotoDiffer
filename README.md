@@ -1,0 +1,2 @@
+# FindPhotoDiffer
+use opencv
